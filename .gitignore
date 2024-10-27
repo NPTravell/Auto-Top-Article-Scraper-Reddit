@@ -1,0 +1,9 @@
+# Ignore the credentials file
+credentials.json
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# Environment variables
+.env
