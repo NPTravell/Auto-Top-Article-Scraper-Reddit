@@ -1,5 +1,6 @@
-praw==7.5.0  # Reddit API
-pandas==1.5.3  
-google-auth==2.17.0
-google-auth-oauthlib==0.4.6 
-google-api-python-client==2.65.0
+praw==7.7.1  # Reddit API
+pandas==2.2.3 #this version works on my machine - default had a bug with numpy when running workflow 
+numpy==2.1.2
+google-auth==2.35.0
+google-auth-oauthlib==1.2.1
+google-api-python-client==2.147.0
