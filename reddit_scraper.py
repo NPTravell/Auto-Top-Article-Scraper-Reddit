@@ -48,8 +48,8 @@ def reddit_scrape():
 def send_to_google_sheets(data, sheet_id):
     try:
         # Setup the Sheets API
-        scopes=["https://www.googleapis.com/auth/spreadsheets"]
-        creds = Credentials.from_service_account_file("credentials.json", scopes)
+        creds = Credentials.from_service_account_file("credentials.json")
+        creds = creds.with_scopes(["https://www.googleapis.com/auth/spreadsheets"])
         service = build("sheets", "v4", credentials=creds)
         sheet = service.spreadsheets()
         
