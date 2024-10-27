@@ -26,11 +26,12 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Create credentials.json
-        run: echo "${{ secrets.GOOGLE_CREDENTIALS }}" > credentials.json
+      #- name: Create credentials.json
+      #  run: echo "${{ secrets.GOOGLE_CREDENTIALS }}" > credentials.json
 
       - name: Run the script
         env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
           REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
           REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
           SPREADSHEETID: ${{ secrets.SPREADSHEETID }}
