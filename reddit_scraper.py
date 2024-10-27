@@ -9,6 +9,7 @@ import json
 
 subreddits = json.loads(os.getenv('SUBREDDITS'))
 
+
 def reddit_scrape():
     # Reddit API credentials
     reddit = praw.Reddit(
@@ -45,10 +46,15 @@ def reddit_scrape():
     df_filtered = df[~df['link'].str.contains(r'reddit\.com|i\.redd\.it|v\.redd\.it')] #get rid of internal links (images/cross-posting)
     send_to_google_sheets(df_filtered, os.getenv('SPREADSHEETID'))
 
+
+
 def send_to_google_sheets(data, sheet_id):
     try:
         # Setup the Sheets API
-        creds = Credentials.from_service_account_file("credentials.json")
+        credentials_json = os.getenv('GOOGLE_CREDENTIALS')
+        credentials = json.loads(credentials_json)
+        creds = Credentials.from_service_account_info(credentials)
+        #creds = Credentials.from_service_account_file("credentials.json")
         creds = creds.with_scopes(["https://www.googleapis.com/auth/spreadsheets"])
         service = build("sheets", "v4", credentials=creds)
         sheet = service.spreadsheets()
