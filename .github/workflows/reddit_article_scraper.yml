@@ -1,0 +1,39 @@
+name: Reddit Scraper Automation
+
+on:
+  #schedule:
+  #  - cron: '0 0 1 * *'  # Runs at midnight on the 1st day of every month
+  workflow_dispatch:  # Allows manual triggering of the workflow
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  scrape_and_submit:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Create credentials.json
+        run: echo "${{ secrets.GOOGLE_CREDENTIALS }}" > credentials.json
+
+      - name: Run the script
+        env:
+          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
+          SPREADSHEETID: ${{ secrets.SPREADSHEETID }}
+          SUBREDDITS: ${{ secrets.SUBREDDITS }} 
+          
+        run: python main.py
